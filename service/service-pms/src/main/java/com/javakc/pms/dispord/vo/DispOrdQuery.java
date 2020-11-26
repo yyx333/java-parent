@@ -7,4 +7,8 @@ import lombok.Data;
 public class DispOrdQuery {
 
     private String orderName;
+
+    private String beginDate;
+
+    private String endDate;
 }

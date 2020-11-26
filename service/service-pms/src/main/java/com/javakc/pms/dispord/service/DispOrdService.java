@@ -32,7 +32,13 @@ public class DispOrdService extends BaseService<DispOrdDao, DispOrd> {
         if (!StringUtils.isEmpty(dispOrdQuery.getOrderName())){
             dispOrdSimpleSpecificationBuilder.and("orderName",":",dispOrdQuery.getOrderName());
         }
-        Page page=dao.findAll(dispOrdSimpleSpecificationBuilder.getSpecification(), PageRequest.of(pageNum-1,pageSize));
-        return page;
+        //创建时间-区间查询
+        if (!StringUtils.isEmpty(dispOrdQuery.getBeginDate())){
+            dispOrdSimpleSpecificationBuilder.and("gmtCreate","ge",dispOrdQuery.getBeginDate());
+        }
+        if (!StringUtils.isEmpty(dispOrdQuery.getEndDate())){
+            dispOrdSimpleSpecificationBuilder.and("gmtCreate","lt",dispOrdQuery.getEndDate());
+        }
+        return dao.findAll(dispOrdSimpleSpecificationBuilder.getSpecification(), PageRequest.of(pageNum-1,pageSize));
     }
 }
